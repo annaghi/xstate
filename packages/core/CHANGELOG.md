@@ -1,5 +1,33 @@
 # xstate
 
+## 4.23.2
+
+### Patch Changes
+
+- [`413a4578`](https://github.com/statelyai/xstate/commit/413a4578cded21beffff822d1485a3725457b768) [#2491](https://github.com/statelyai/xstate/pull/2491) Thanks [@davidkpiano](https://github.com/davidkpiano)! - The custom `.toString()` method on action objects is now removed which improves performance in larger applications (see [#2488](https://github.com/statelyai/xstate/discussions/2488) for more context).
+
+* [`5e1223cd`](https://github.com/statelyai/xstate/commit/5e1223cd58485045b192677753946df2c00eddf7) [#2422](https://github.com/statelyai/xstate/pull/2422) Thanks [@davidkpiano](https://github.com/davidkpiano)! - The `context` property has been removed from `StateNodeConfig`, as it has never been allowed, nor has it ever done anything. The previous typing was unsafe and allowed `context` to be specified on nested state nodes:
+
+  ```ts
+  createMachine({
+    context: {
+      /* ... */
+    }, // ✅ This is allowed
+    initial: 'inner',
+    states: {
+      inner: {
+        context: {
+          /* ... */
+        } // ❌ This will no longer compile
+      }
+    }
+  });
+  ```
+
+- [`5b70c2ff`](https://github.com/statelyai/xstate/commit/5b70c2ff21cc5d8c6cf1c13b6eb7bb12611a9835) [#2508](https://github.com/statelyai/xstate/pull/2508) Thanks [@davidkpiano](https://github.com/davidkpiano)! - A race condition occurred when a child service is immediately stopped and the parent service tried to remove it from its undefined state (during its own initialization). This has been fixed, and the race condition no longer occurs. See [this issue](https://github.com/statelyai/xstate/issues/2507) for details.
+
+* [`c17dd376`](https://github.com/statelyai/xstate/commit/c17dd37621a2ba46967926d550c70a35bba7024c) [#2496](https://github.com/statelyai/xstate/pull/2496) Thanks [@VanTanev](https://github.com/VanTanev)! - Add utility type `EmittedFrom<T>` that extracts `Emitted` type from any type which can emit data
+
 ## 4.23.1
 
 ### Patch Changes
